@@ -1,3 +1,4 @@
 {
-  "helloWorld": "Xin chào!"
+    "@@locale": "vi",
+    "hello": "Xin chào"
 }

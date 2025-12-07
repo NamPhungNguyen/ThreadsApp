@@ -1,7 +1,9 @@
 import 'package:bus_booking/core/routes/app_pages.dart';
 import 'package:bus_booking/core/routes/app_routes.dart';
 import 'package:bus_booking/core/theme/app_theme.dart';
+import 'package:bus_booking/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:get/route_manager.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
@@ -20,11 +22,18 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      initialRoute: Routes.HOME,
+      initialRoute: Routes.LOGIN,
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.system,
       getPages: AppPages.routes,
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }
