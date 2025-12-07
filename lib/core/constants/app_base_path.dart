@@ -1,23 +1,31 @@
 class AppBasePath {
-  static String icon(String file) => 'assets/icons/$file';
-  static String image(String file) => 'assets/images/$file';
+  static String icon(String folder, String file) =>
+      'assets/icons/$folder/$file';
+  static String image(String folder, String file) =>
+      'assets/images/$folder/$file';
 }
 
 class AppIcons {
-  static const String home = 'feed.svg';
-  static const String homeFilled = 'feed_filled.svg';
+  static const String _bottomBar = 'iconBottomBar';
+  static String get home => AppBasePath.icon(_bottomBar, 'feed.svg');
+  static String get homeFilled =>
+      AppBasePath.icon(_bottomBar, 'feed_filled.svg');
 
-  static const String explore = 'explore.svg';
-  static const String exploreFilled = 'explore_filled.svg';
+  static String get explore => AppBasePath.icon(_bottomBar, 'explore.svg');
+  static String get exploreFilled =>
+      AppBasePath.icon(_bottomBar, 'explore_filled.svg');
 
-  static const String write = 'write.svg';
-  static const String writeFilled = 'write_filled.svg';
+  static String get write => AppBasePath.icon(_bottomBar, 'write.svg');
+  static String get writeFilled =>
+      AppBasePath.icon(_bottomBar, 'write_filled.svg');
 
-  static const String heart = 'heart.svg';
-  static const String heartFilled = 'heart_filled.svg';
+  static String get heart => AppBasePath.icon(_bottomBar, 'heart.svg');
+  static String get heartFilled =>
+      AppBasePath.icon(_bottomBar, 'heart_filled.svg');
 
-  static const String user = 'user.svg';
-  static const String userFilled = 'user_filled.svg';
+  static String get user => AppBasePath.icon(_bottomBar, 'user.svg');
+  static String get userFilled =>
+      AppBasePath.icon(_bottomBar, 'user_filled.svg');
 }
 
 class AppImages {
