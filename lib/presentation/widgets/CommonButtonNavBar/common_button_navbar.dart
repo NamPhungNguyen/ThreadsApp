@@ -15,7 +15,7 @@ class CommonButtonNavbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 56,
+      height: 80,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 28),
         child: Row(
