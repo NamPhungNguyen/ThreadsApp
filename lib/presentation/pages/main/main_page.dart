@@ -2,6 +2,7 @@ import 'package:bus_booking/foundation/architecture/base_bloc.dart';
 import 'package:bus_booking/presentation/pages/activity/activity_page.dart';
 import 'package:bus_booking/presentation/pages/home/home_page.dart';
 import 'package:bus_booking/presentation/pages/main/bloc/main_bloc.dart';
+import 'package:bus_booking/presentation/pages/new_thread/new_thread_page.dart';
 import 'package:bus_booking/presentation/pages/profile/profile_page.dart';
 import 'package:bus_booking/presentation/pages/search/search_page.dart';
 import 'package:bus_booking/presentation/widgets/CommonButtonNavBar/common_button_navbar.dart';
@@ -28,7 +29,11 @@ class MainPage extends BaseBlocPage<MainBloc> {
           ),
           bottomNavigationBar: CommonButtonNavbar(
             onTap: (index) {
-              context.read<MainBloc>().add(ChangeTabEvent(index));
+              if (index == 2) {
+                _showNewThreadModal(context);
+              } else {
+                context.read<MainBloc>().add(ChangeTabEvent(index));
+              }
             },
             currentIndex: state.currentIndex,
           ),
@@ -36,4 +41,18 @@ class MainPage extends BaseBlocPage<MainBloc> {
       },
     );
   }
+}
+
+void _showNewThreadModal(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true, // Cho phép control height
+    backgroundColor: Colors.transparent,
+    builder: (context) => DraggableScrollableSheet(
+      initialChildSize: 0.95, // 95% màn hình
+      minChildSize: 0.5, // Kéo xuống tối thiểu 50%
+      maxChildSize: 0.95, // Kéo lên tối đa 95%
+      builder: (context, scrollController) => NewThreadPage(),
+    ),
+  );
 }

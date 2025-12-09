@@ -15,7 +15,7 @@ class SplashPage extends BaseBlocPage<SplashBloc> {
     return BlocConsumer<SplashBloc, SplashState>(
       listener: (context, state) {
         if (state is SplashNavigateToLogin) {
-          Get.offAllNamed(Routes.LOGIN);
+          Get.offAllNamed(AppRoutes.login);
         }
       },
       builder: (context, state) {

@@ -1,6 +1,4 @@
 import 'package:bus_booking/core/routes/app_routes.dart';
-import 'package:bus_booking/presentation/pages/home/home_binding.dart';
-import 'package:bus_booking/presentation/pages/home/home_page.dart';
 import 'package:bus_booking/presentation/pages/login/login_binding.dart';
 import 'package:bus_booking/presentation/pages/login/login_page.dart';
 import 'package:bus_booking/presentation/pages/main/main_binding.dart';
@@ -12,22 +10,17 @@ import 'package:get/get.dart';
 class AppPages {
   static final routes = [
     GetPage(
-      name: Routes.SPLASH,
+      name: AppRoutes.splash,
       page: () => SplashPage(),
       binding: SplashBinding(),
     ),
     GetPage(
-      name: Routes.LOGIN,
+      name: AppRoutes.login,
       page: () => const LoginPage(),
       binding: LoginBinding(),
     ),
     GetPage(
-      name: Routes.HOME,
-      page: () => HomePage(),
-      binding: HomeBinding(),
-    ),
-    GetPage(
-      name: Routes.MAIN,
+      name: AppRoutes.main,
       page: () => MainPage(),
       binding: MainBinding(),
     )
