@@ -5,11 +5,13 @@ import 'package:flutter_svg/svg.dart';
 class CommonButtonNavbar extends StatelessWidget {
   const CommonButtonNavbar({
     super.key,
-    required this.onTap,
+    required this.onTabTap,
+    required this.onNewThreadTap,
     required this.currentIndex,
   });
 
-  final Function(int) onTap;
+  final Function(int) onTabTap;
+  final VoidCallback onNewThreadTap;
   final int currentIndex;
 
   @override
@@ -33,21 +35,16 @@ class CommonButtonNavbar extends StatelessWidget {
               activeIconPath: AppIcons.explore,
               inActiveIconPath: AppIcons.exploreFilled,
             ),
+            _buildNewThreadButton(context),
             _buildNavItem(
               context: context,
               index: 2,
-              activeIconPath: AppIcons.write,
-              inActiveIconPath: AppIcons.writeFilled,
-            ),
-            _buildNavItem(
-              context: context,
-              index: 3,
               activeIconPath: AppIcons.heart,
               inActiveIconPath: AppIcons.heartFilled,
             ),
             _buildNavItem(
               context: context,
-              index: 4,
+              index: 3,
               activeIconPath: AppIcons.user,
               inActiveIconPath: AppIcons.userFilled,
             ),
@@ -67,7 +64,7 @@ class CommonButtonNavbar extends StatelessWidget {
 
     return Expanded(
       child: InkWell(
-        onTap: () => onTap(index),
+        onTap: () => onTabTap(index),
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
         child: SizedBox(
@@ -78,6 +75,33 @@ class CommonButtonNavbar extends StatelessWidget {
               duration: const Duration(milliseconds: 200),
               child: SvgPicture.asset(
                 isActive ? activeIconPath : inActiveIconPath,
+                fit: BoxFit.contain,
+                colorFilter: ColorFilter.mode(
+                  Theme.of(context).colorScheme.onPrimary,
+                  BlendMode.srcIn,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildNewThreadButton(BuildContext context) {
+    return Expanded(
+      child: InkWell(
+        onTap: onNewThreadTap,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        child: SizedBox(
+          height: 60,
+          child: Center(
+            child: AnimatedOpacity(
+              opacity: 0.4,
+              duration: const Duration(milliseconds: 200),
+              child: SvgPicture.asset(
+                AppIcons.write,
                 fit: BoxFit.contain,
                 colorFilter: ColorFilter.mode(
                   Theme.of(context).colorScheme.onPrimary,

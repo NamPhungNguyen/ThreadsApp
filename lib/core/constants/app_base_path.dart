@@ -1,6 +1,7 @@
 class AppBasePath {
   static String icon(String folder, String file) =>
       'assets/icons/$folder/$file';
+  static String iconRoot(String file) => 'assets/icons/$file';
   static String image(String folder, String file) =>
       'assets/images/$folder/$file';
 }
@@ -26,6 +27,7 @@ class AppIcons {
   static String get user => AppBasePath.icon(_bottomBar, 'user.svg');
   static String get userFilled =>
       AppBasePath.icon(_bottomBar, 'user_filled.svg');
+  static String get threads => AppBasePath.iconRoot('threads.svg');
 }
 
 class AppImages {

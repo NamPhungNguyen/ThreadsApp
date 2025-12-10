@@ -9,6 +9,6 @@ class MainBloc extends Bloc<MainEvent, MainState> {
   }
 
   void _onChangeTab(ChangeTabEvent event, Emitter<MainState> emit) {
-    emit(MainTabChanged(currentIndex: event.index));
+    emit(MainTabChanged(currentIndex: event.tabIndex));
   }
 }

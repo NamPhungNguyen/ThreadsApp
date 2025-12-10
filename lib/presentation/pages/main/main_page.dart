@@ -1,3 +1,4 @@
+import 'package:bus_booking/core/constants/app_colors.dart';
 import 'package:bus_booking/foundation/architecture/base_bloc.dart';
 import 'package:bus_booking/presentation/pages/activity/activity_page.dart';
 import 'package:bus_booking/presentation/pages/home/home_page.dart';
@@ -5,7 +6,7 @@ import 'package:bus_booking/presentation/pages/main/bloc/main_bloc.dart';
 import 'package:bus_booking/presentation/pages/new_thread/new_thread_page.dart';
 import 'package:bus_booking/presentation/pages/profile/profile_page.dart';
 import 'package:bus_booking/presentation/pages/search/search_page.dart';
-import 'package:bus_booking/presentation/widgets/CommonButtonNavBar/common_button_navbar.dart';
+import 'package:bus_booking/presentation/widgets/common_button_nav_bar/common_button_navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -28,13 +29,12 @@ class MainPage extends BaseBlocPage<MainBloc> {
             ],
           ),
           bottomNavigationBar: CommonButtonNavbar(
-            onTap: (index) {
-              if (index == 2) {
-                _showNewThreadModal(context);
-              } else {
-                context.read<MainBloc>().add(ChangeTabEvent(index));
-              }
+            onTabTap: (index) {
+              context.read<MainBloc>().add(
+                    ChangeTabEvent(index),
+                  );
             },
+            onNewThreadTap: () => _showNewThreadModal(context),
             currentIndex: state.currentIndex,
           ),
         );
@@ -46,8 +46,9 @@ class MainPage extends BaseBlocPage<MainBloc> {
 void _showNewThreadModal(BuildContext context) {
   showModalBottomSheet(
     context: context,
-    isScrollControlled: true, // Cho phép control height
+    isScrollControlled: true,
     backgroundColor: Colors.transparent,
+    barrierColor: AppColors.borderDark.withValues(alpha: 0.85),
     builder: (context) => DraggableScrollableSheet(
       initialChildSize: 0.95, // 95% màn hình
       minChildSize: 0.5, // Kéo xuống tối thiểu 50%
