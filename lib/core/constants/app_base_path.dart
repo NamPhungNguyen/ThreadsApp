@@ -28,6 +28,13 @@ class AppIcons {
   static String get userFilled =>
       AppBasePath.icon(_bottomBar, 'user_filled.svg');
   static String get threads => AppBasePath.iconRoot('threads.svg');
+  static String get cross => AppBasePath.iconRoot('cross.svg');
+  static String get dots => AppBasePath.iconRoot('3dots.svg');
+  static String get verified => AppBasePath.iconRoot('verified.svg');
+  static String get repost => AppBasePath.iconRoot('repost.svg');
+  static String get send => AppBasePath.iconRoot('send.svg');
+  static String get message => AppBasePath.iconRoot('message.svg');
+  static String get heartPost => AppBasePath.iconRoot('heart_post.svg');
 }
 
 class AppImages {

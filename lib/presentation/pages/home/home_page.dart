@@ -63,24 +63,157 @@ class HomePage extends BaseBlocPage<HomeBloc> {
 
   Widget _buildThreadItem() {
     return ListView.builder(
-      itemCount: 1,
+      itemCount: 10,
       itemBuilder: (context, index) {
-        return Container(
+        return Padding(
+          padding: const EdgeInsets.all(8.0),
           child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              // avatar user
               Stack(
+                clipBehavior: Clip.none,
                 children: [
-                  Positioned.fill(
-                    top: 0,
-                    child: CircleAvatar(
-                      radius: 20,
-                      backgroundImage: NetworkImage(
-                        'https://i.pinimg.com/736x/e9/e0/7d/e9e07de22e3ef161bf92d1bcf241e4d0.jpg',
-                      ),
+                  const CircleAvatar(
+                    radius: 25,
+                    backgroundImage: NetworkImage(
+                      'https://i.pinimg.com/736x/e9/e0/7d/e9e07de22e3ef161bf92d1bcf241e4d0.jpg',
                     ),
                   ),
+                  Positioned(
+                    bottom: -4,
+                    right: -4,
+                    child: Container(
+                      height: 26,
+                      width: 26,
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.onPrimary,
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Theme.of(context).colorScheme.primary,
+                          width: 3,
+                        ),
+                      ),
+                      child: SvgPicture.asset(
+                        AppIcons.cross,
+                        colorFilter: ColorFilter.mode(
+                          Theme.of(context).colorScheme.primary,
+                          BlendMode.srcIn,
+                        ),
+                      ),
+                    ),
+                  )
                 ],
               ),
+              // new post user
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      // info user
+                      Row(
+                        children: [
+                          const Text("studywithnam"),
+                          const SizedBox(width: 4),
+                          SvgPicture.asset(
+                            AppIcons.verified,
+                            height: 14,
+                            width: 14,
+                          ),
+                          const SizedBox(width: 4),
+                          const Text(
+                            "21h",
+                            style: TextStyle(
+                              color: AppColors.borderDark,
+                            ),
+                          ),
+                          const Spacer(),
+                          SvgPicture.asset(
+                            AppIcons.dots,
+                            colorFilter: const ColorFilter.mode(
+                              AppColors.hintText,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Text(
+                        '''This is a long post content. 
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                       Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.This is a long post content. 
+                       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.This is a long post content.
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.This is a long post content. Lorem ipsum dolor sit a
+                        met, consectetur adipiscing elit.
+                         Sed do eiusmod tempor incididunt u
+                         t labore et dolore magna aliqua.This is a long post content. Lorem ipsum dolor sit amet, consectetur 
+                         adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.This is a long post content. Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                         Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.This is a long post content. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                         This is a long post content. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.This is a long post content. 
+                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.This is 
+                         a long post content. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.This is a long post content. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                          incididunt ut labore et dolore magna aliqua.This is a long post content. Lo
+                         rem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.This is a long post content. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna 
+                         aliqua.This is a long post content. 
+                         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                         This is a long post content. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.This is a long post content. 
+                      Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+                      Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.''',
+                        maxLines: 20,
+                      ),
+                      const SizedBox(height: 10),
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            AppIcons.heartPost,
+                            colorFilter: ColorFilter.mode(
+                                AppColors.hintText, BlendMode.srcIn),
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            "2K",
+                            style: TextStyle(color: AppColors.hintText),
+                          ),
+                          const SizedBox(width: 10),
+                          SvgPicture.asset(
+                            AppIcons.message,
+                            colorFilter: ColorFilter.mode(
+                                AppColors.hintText, BlendMode.srcIn),
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            "123",
+                            style: TextStyle(color: AppColors.hintText),
+                          ),
+                          const SizedBox(width: 10),
+                          SvgPicture.asset(
+                            AppIcons.repost,
+                            colorFilter: ColorFilter.mode(
+                                AppColors.hintText, BlendMode.srcIn),
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            "44",
+                            style: TextStyle(color: AppColors.hintText),
+                          ),
+                          const SizedBox(width: 10),
+                          SvgPicture.asset(
+                            AppIcons.send,
+                            colorFilter: ColorFilter.mode(
+                                AppColors.hintText, BlendMode.srcIn),
+                          ),
+                          const SizedBox(width: 10),
+                          Text(
+                            "11",
+                            style: TextStyle(color: AppColors.hintText),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              )
             ],
           ),
         );
@@ -104,7 +237,7 @@ class HomePage extends BaseBlocPage<HomeBloc> {
         child: const Row(
           children: [
             CircleAvatar(
-              radius: 20,
+              radius: 25,
               backgroundImage: NetworkImage(
                 'https://i.pinimg.com/736x/e9/e0/7d/e9e07de22e3ef161bf92d1bcf241e4d0.jpg',
               ),
