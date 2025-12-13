@@ -35,6 +35,7 @@ class AppIcons {
   static String get send => AppBasePath.iconRoot('send.svg');
   static String get message => AppBasePath.iconRoot('message.svg');
   static String get heartPost => AppBasePath.iconRoot('heart_post.svg');
+  static String get arrowRight => AppBasePath.iconRoot('arrow_right.svg');
 }
 
 class AppImages {
