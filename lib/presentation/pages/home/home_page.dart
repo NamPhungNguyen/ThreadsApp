@@ -10,7 +10,7 @@ import 'package:photo_view/photo_view.dart';
 
 part 'components/app_bar_home.dart';
 part 'components/thread_item.dart';
-part 'components/user_post_threads.dart';
+part 'components/user_new_post_threads.dart';
 part 'components/action_button.dart';
 part 'components/avatar_user.dart';
 part 'components/media_content.dart';
@@ -21,32 +21,29 @@ class HomePage extends BaseBlocPage<HomeBloc> {
 
   @override
   Widget buildPage(BuildContext context) {
-    return BlocConsumer<HomeBloc, HomeState>(
-      listener: (context, state) {},
-      builder: (context, state) {
-        return Scaffold(
-          appBar: _buildAppBarHome(context),
-          body: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(
-                child: _buildPostThreads(),
-              ),
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (context, index) {
-                    return _buildThreadItem(
-                      context,
-                      isLinkTopic: index % 2 == 0,
-                      isVerified: index % 3 == 0,
-                    );
-                  },
-                  childCount: 10,
-                ),
-              ),
-            ],
+    return Scaffold(
+      appBar: _buildAppBarHome(context),
+      body: CustomScrollView(
+        slivers: [
+          SliverToBoxAdapter(
+            child: _buildNewPostThreads(),
           ),
-        );
-      },
+          BlocBuilder<HomeBloc, HomeState>(
+            builder: (context, state) {
+              return SliverList.builder(
+                itemBuilder: (context, index) {
+                  return _buildThreadItem(
+                    context,
+                    isLinkTopic: index % 2 == 0,
+                    isVerified: index % 3 == 0,
+                  );
+                },
+                itemCount: 5,
+              );
+            },
+          ),
+        ],
+      ),
     );
   }
 }

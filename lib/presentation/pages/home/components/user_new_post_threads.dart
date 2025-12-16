@@ -1,9 +1,9 @@
 part of '../home_page.dart';
 
 extension UserPostThreads on HomePage {
-  Widget _buildPostThreads() {
+  Widget _buildNewPostThreads() {
     return GestureDetector(
-      onTap: () => {print("Test")},
+      onTap: () => {print("New Post Threads")},
       child: Container(
         decoration: const BoxDecoration(
           border: Border(
@@ -18,7 +18,7 @@ extension UserPostThreads on HomePage {
           children: [
             CircleAvatar(
               radius: 25,
-              backgroundImage: NetworkImage(
+              backgroundImage: CachedNetworkImageProvider(
                 'https://i.pinimg.com/736x/e9/e0/7d/e9e07de22e3ef161bf92d1bcf241e4d0.jpg',
               ),
             ),
