@@ -2,19 +2,14 @@ import 'package:bus_booking/core/constants/app_base_path.dart';
 import 'package:bus_booking/core/constants/app_colors.dart';
 import 'package:bus_booking/foundation/architecture/base_bloc.dart';
 import 'package:bus_booking/presentation/pages/home/bloc/home_bloc.dart';
+import 'package:bus_booking/presentation/widgets/thread_item/thread_item.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:photo_view/photo_view.dart';
 
 part 'components/app_bar_home.dart';
-part 'components/thread_item.dart';
 part 'components/user_new_post_threads.dart';
-part 'components/action_button.dart';
-part 'components/avatar_user.dart';
-part 'components/media_content.dart';
-part 'components/info_user.dart';
 
 class HomePage extends BaseBlocPage<HomeBloc> {
   HomePage({super.key});
@@ -30,12 +25,20 @@ class HomePage extends BaseBlocPage<HomeBloc> {
           ),
           BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
+              // todo: add api call
+              final List<String> images = [];
+              const content = null;
               return SliverList.builder(
                 itemBuilder: (context, index) {
-                  return _buildThreadItem(
-                    context,
+                  return ThreadItem(
+                    content: content,
+                    images: images,
                     isLinkTopic: index % 2 == 0,
                     isVerified: index % 3 == 0,
+                    likeCount: 7982000 + index * 100,
+                    commentCount: 12223 + index * 10,
+                    repostCount: 44 + index,
+                    shareCount: 11 + index * 2,
                   );
                 },
                 itemCount: 5,

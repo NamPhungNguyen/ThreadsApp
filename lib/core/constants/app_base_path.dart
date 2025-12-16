@@ -4,6 +4,7 @@ class AppBasePath {
   static String iconRoot(String file) => 'assets/icons/$file';
   static String image(String folder, String file) =>
       'assets/images/$folder/$file';
+  static String imageRoot(String file) => 'assets/images/$file';
 }
 
 class AppIcons {
@@ -39,7 +40,6 @@ class AppIcons {
 }
 
 class AppImages {
-  // example
-  static const String onboarding1 = 'onboarding1.png';
-  static const String onboarding2 = 'onboarding2.png';
+  static String get avatarDefault =>
+      AppBasePath.imageRoot('avatar_default.jpg');
 }

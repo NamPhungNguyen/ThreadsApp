@@ -1,18 +1,20 @@
-part of '../home_page.dart';
+import 'package:bus_booking/core/constants/app_colors.dart';
+import 'package:bus_booking/core/utils/number_formatter.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
-extension ActionButton on HomePage {
-  Widget _buildActionButtons() {
-    return Row(
-      children: [
-        _buildActionButton(AppIcons.heartPost, "2K"),
-        _buildActionButton(AppIcons.message, "123"),
-        _buildActionButton(AppIcons.repost, "44"),
-        _buildActionButton(AppIcons.send, "11"),
-      ],
-    );
-  }
+class ActionButton extends StatelessWidget {
+  const ActionButton({
+    super.key,
+    required this.icon,
+    required this.count,
+  });
 
-  Widget _buildActionButton(String icon, String count) {
+  final String icon;
+  final int count;
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(right: 16),
       child: GestureDetector(
@@ -28,7 +30,7 @@ extension ActionButton on HomePage {
             ),
             const SizedBox(width: 4),
             Text(
-              count,
+              NumberFormatter.formatNumber(count),
               style: const TextStyle(color: AppColors.hintText),
             ),
           ],

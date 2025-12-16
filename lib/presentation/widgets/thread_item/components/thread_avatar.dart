@@ -1,23 +1,40 @@
-part of '../home_page.dart';
+import 'package:bus_booking/core/constants/app_base_path.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
-extension AvatarUser on HomePage {
-  Widget _buildAvatarUser(BuildContext context) {
+class ThreadAvatar extends StatelessWidget {
+  const ThreadAvatar({
+    super.key,
+    this.avatarUrl,
+    this.onTap,
+    this.onFollowTap,
+  });
+
+  final String? avatarUrl;
+  final VoidCallback? onTap;
+  final VoidCallback? onFollowTap;
+
+  @override
+  Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => print("Avatar user"),
+      onTap: onTap ?? () => print("Avatar user"),
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          const CircleAvatar(
+          CircleAvatar(
             radius: 20,
-            backgroundImage: NetworkImage(
-              'https://i.pinimg.com/736x/e9/e0/7d/e9e07de22e3ef161bf92d1bcf241e4d0.jpg',
-            ),
+            backgroundImage: avatarUrl != null
+                ? CachedNetworkImageProvider(
+                    avatarUrl!,
+                  )
+                : AssetImage(AppImages.avatarDefault),
           ),
           Positioned(
             bottom: -4,
             right: -4,
             child: GestureDetector(
-              onTap: () => print("Follow"),
+              onTap: onFollowTap ?? () => print("Follow"),
               child: Container(
                 height: 20,
                 width: 20,

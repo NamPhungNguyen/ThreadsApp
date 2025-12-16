@@ -1,11 +1,28 @@
-part of '../home_page.dart';
+import 'package:bus_booking/core/constants/app_base_path.dart';
+import 'package:bus_booking/core/constants/app_colors.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
-extension InfoUser on HomePage {
-  Widget _buildInfoUser(
-    BuildContext context, {
-    bool isLinkTopic = false,
-    bool isVerified = false,
-  }) {
+class ThreadUserInfo extends StatelessWidget {
+  const ThreadUserInfo({
+    super.key,
+    this.username = 'chillWithMe',
+    this.topicName = 'Flutter Dev',
+    this.timeAgo = '21h',
+    this.isLinkTopic = false,
+    this.isVerified = false,
+    this.onMenuTap,
+  });
+
+  final String username;
+  final String topicName;
+  final String timeAgo;
+  final bool isLinkTopic;
+  final bool isVerified;
+  final VoidCallback? onMenuTap;
+
+  @override
+  Widget build(BuildContext context) {
     return Row(
       children: [
         Expanded(
@@ -21,8 +38,8 @@ extension InfoUser on HomePage {
                       fontWeight: FontWeight.w500,
                     ),
                     children: [
-                      const TextSpan(text: "chillWithMe"),
-                      // Verified ngay sau username
+                      TextSpan(text: username),
+                      // Verified badge
                       if (isVerified)
                         WidgetSpan(
                           alignment: PlaceholderAlignment.middle,
@@ -35,7 +52,7 @@ extension InfoUser on HomePage {
                             ),
                           ),
                         ),
-                      // Topic sau verified
+                      // Topic link
                       if (isLinkTopic) ...[
                         WidgetSpan(
                           alignment: PlaceholderAlignment.middle,
@@ -52,7 +69,7 @@ extension InfoUser on HomePage {
                             ),
                           ),
                         ),
-                        const TextSpan(text: "Flutter Dev"),
+                        TextSpan(text: topicName),
                       ],
                     ],
                   ),
@@ -60,16 +77,16 @@ extension InfoUser on HomePage {
               ),
               const SizedBox(width: 6),
               // Time
-              const Text(
-                "21h",
-                style: TextStyle(color: AppColors.hintText),
+              Text(
+                timeAgo,
+                style: const TextStyle(color: AppColors.hintText),
               ),
             ],
           ),
         ),
         // Menu dots
         GestureDetector(
-          onTap: () => print("Menu"),
+          onTap: onMenuTap ?? () => print("Menu"),
           child: Padding(
             padding: const EdgeInsets.only(left: 8),
             child: SvgPicture.asset(

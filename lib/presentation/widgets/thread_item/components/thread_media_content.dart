@@ -1,25 +1,43 @@
-part of '../home_page.dart';
+import 'package:bus_booking/core/constants/app_colors.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/material.dart';
+import 'package:photo_view/photo_view.dart';
 
-extension MediaContent on HomePage {
-  Widget _buildMediaContent(BuildContext context, List<String> images) {
+class ThreadMediaContent extends StatelessWidget {
+  const ThreadMediaContent({
+    super.key,
+    required this.images,
+  });
+
+  final List<String> images;
+
+  @override
+  Widget build(BuildContext context) {
     if (images.isEmpty) return const SizedBox.shrink();
 
     if (images.length == 1) {
-      return _buildSingleImage(context, images.first);
+      return _SingleImage(imageUrl: images.first);
     }
 
-    return _buildMultipleImages(context, images);
+    return _MultipleImages(images: images);
   }
+}
 
-  Widget _buildSingleImage(BuildContext context, String image) {
+class _SingleImage extends StatelessWidget {
+  const _SingleImage({required this.imageUrl});
+
+  final String imageUrl;
+
+  @override
+  Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 50, right: 12),
       child: GestureDetector(
-        onTap: () => _showFullImage(context, image),
+        onTap: () => _showFullImage(context, imageUrl),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
           child: CachedNetworkImage(
-            imageUrl: image,
+            imageUrl: imageUrl,
             fit: BoxFit.cover,
             width: double.infinity,
             height: 200,
@@ -43,10 +61,42 @@ extension MediaContent on HomePage {
     );
   }
 
-  Widget _buildMultipleImages(BuildContext context, List<String> images) {
+  void _showFullImage(BuildContext context, String imageUrl) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => Scaffold(
+          backgroundColor: Colors.black,
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+            leading: IconButton(
+              icon: const Icon(Icons.close, color: Colors.white),
+              onPressed: () => Navigator.pop(context),
+            ),
+          ),
+          extendBodyBehindAppBar: true,
+          body: PhotoView(
+            imageProvider: CachedNetworkImageProvider(imageUrl),
+            minScale: PhotoViewComputedScale.contained,
+            maxScale: PhotoViewComputedScale.covered * 2,
+            backgroundDecoration: const BoxDecoration(color: Colors.black),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _MultipleImages extends StatelessWidget {
+  const _MultipleImages({required this.images});
+
+  final List<String> images;
+
+  @override
+  Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
 
-    // Shift left by 12 (parent padding) to start at screen edge
     return Transform.translate(
       offset: const Offset(-12, 0),
       child: SizedBox(
@@ -54,9 +104,7 @@ extension MediaContent on HomePage {
         width: screenWidth,
         child: ListView.separated(
           scrollDirection: Axis.horizontal,
-          // Align first item with text (12 + 50 = 62), right padding 12
           padding: const EdgeInsets.only(left: 62, right: 12),
-          // Allow content to scroll into the padding area (over the avatar)
           clipBehavior: Clip.none,
           itemCount: images.length,
           separatorBuilder: (context, index) => const SizedBox(width: 8),
@@ -64,7 +112,6 @@ extension MediaContent on HomePage {
             return GestureDetector(
               onTap: () => _showFullImage(context, images[index]),
               child: SizedBox(
-                // Each item takes 70% of screen width
                 width: screenWidth * 0.7,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12),
@@ -103,7 +150,7 @@ extension MediaContent on HomePage {
               onPressed: () => Navigator.pop(context),
             ),
           ),
-          extendBodyBehindAppBar: true, // Hiển thị nội dung phía sau AppBar
+          extendBodyBehindAppBar: true,
           body: PhotoView(
             imageProvider: CachedNetworkImageProvider(imageUrl),
             minScale: PhotoViewComputedScale.contained,
