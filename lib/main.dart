@@ -36,7 +36,11 @@ Future<void> _setupLocalNotifications() async {
   const channel = AndroidNotificationChannel(
     'high_importance_channel',
     'High Importance Notifications',
-    importance: Importance.high,
+    description: 'This channel is used for important notifications',
+    importance: Importance.max,
+    playSound: true,
+    enableVibration: true,
+    showBadge: true,
   );
 
   await localNotifications
@@ -67,9 +71,15 @@ Future<void> _showNotification(RemoteMessage message) async {
       android: AndroidNotificationDetails(
         'high_importance_channel',
         'High Importance Notifications',
-        importance: Importance.high,
+        channelDescription: 'This channel is used for important notifications',
+        importance: Importance.max,
         priority: Priority.high,
         icon: '@mipmap/ic_launcher',
+        showWhen: true,
+        enableVibration: true,
+        playSound: true,
+        visibility: NotificationVisibility.public,
+        ticker: 'New notification',
       ),
       iOS: DarwinNotificationDetails(),
     ),

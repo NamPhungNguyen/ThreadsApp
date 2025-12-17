@@ -56,7 +56,7 @@ class ThreadItem extends StatelessWidget {
                       isVerified: isVerified,
                     ),
                     if (content != null && content!.isNotEmpty) ...[
-                      const SizedBox(height: 4),
+                      const SizedBox(height: 2),
                       Text(
                         content!,
                         maxLines: 10,
@@ -74,46 +74,21 @@ class ThreadItem extends StatelessWidget {
             const SizedBox(height: 8),
             ThreadMediaContent(images: images!),
           ],
-
           // Action Buttons
-          Padding(
-            padding: const EdgeInsets.only(left: 50, top: 12),
-            child: ThreadActionButtons(
-              likeCount: likeCount,
-              commentCount: commentCount,
-              repostCount: repostCount,
-              shareCount: shareCount,
+          if ((content != null && content!.isNotEmpty) ||
+              images != null && images!.isNotEmpty) ...[
+            Padding(
+              padding: const EdgeInsets.only(left: 50, top: 8),
+              child: ThreadActionButtons(
+                likeCount: likeCount,
+                commentCount: commentCount,
+                repostCount: repostCount,
+                shareCount: shareCount,
+              ),
             ),
-          ),
+          ],
         ],
       ),
-    );
-  }
-}
-
-class ThreadActionButtons extends StatelessWidget {
-  const ThreadActionButtons({
-    super.key,
-    required this.likeCount,
-    required this.commentCount,
-    required this.repostCount,
-    required this.shareCount,
-  });
-
-  final int likeCount;
-  final int commentCount;
-  final int repostCount;
-  final int shareCount;
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        ActionButton(icon: 'assets/icons/heart_post.svg', count: likeCount),
-        ActionButton(icon: 'assets/icons/message.svg', count: commentCount),
-        ActionButton(icon: 'assets/icons/repost.svg', count: repostCount),
-        ActionButton(icon: 'assets/icons/send.svg', count: shareCount),
-      ],
     );
   }
 }

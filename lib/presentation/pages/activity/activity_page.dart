@@ -21,9 +21,10 @@ class _ActivityPageState extends State<ActivityPage> {
   }
 
   Future<void> setUpLocalNotifications() async {
-    const androidSettings = AndroidInitializationSettings('@mipmap/ic_launcher');
+    const androidSettings =
+        AndroidInitializationSettings('@mipmap/ic_launcher');
     const iosSettings = DarwinInitializationSettings();
-    
+
     await localNotifications.initialize(
       const InitializationSettings(
         android: androidSettings,
@@ -35,11 +36,16 @@ class _ActivityPageState extends State<ActivityPage> {
     const channel = AndroidNotificationChannel(
       'high_importance_channel',
       'High Importance Notifications',
-      importance: Importance.high,
+      description: 'This channel is used for important notifications',
+      importance: Importance.max,
+      playSound: true,
+      enableVibration: true,
+      showBadge: true,
     );
-    
+
     await localNotifications
-        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin>()
         ?.createNotificationChannel(channel);
   }
 
@@ -71,9 +77,16 @@ class _ActivityPageState extends State<ActivityPage> {
         android: AndroidNotificationDetails(
           'high_importance_channel',
           'High Importance Notifications',
-          importance: Importance.high,
+          channelDescription:
+              'This channel is used for important notifications',
+          importance: Importance.max,
           priority: Priority.high,
           icon: '@mipmap/ic_launcher',
+          showWhen: true,
+          enableVibration: true,
+          playSound: true,
+          visibility: NotificationVisibility.public,
+          ticker: 'New notification',
         ),
         iOS: DarwinNotificationDetails(),
       ),
