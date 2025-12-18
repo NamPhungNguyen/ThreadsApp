@@ -1,5 +1,6 @@
 import 'package:bus_booking/core/constants/app_base_path.dart';
 import 'package:bus_booking/core/constants/app_colors.dart';
+import 'package:bus_booking/domain/entities/media/media_entity.dart';
 import 'package:bus_booking/foundation/architecture/base_bloc.dart';
 import 'package:bus_booking/presentation/pages/home/bloc/home_bloc.dart';
 import 'package:bus_booking/presentation/widgets/thread_item/thread_item.dart';
@@ -26,11 +27,21 @@ class HomePage extends BaseBlocPage<HomeBloc> {
           BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
               // todo: add api call
-              final List<String> images = [
-                "https://images.pexels.com/photos/12732558/pexels-photo-12732558.jpeg",
-                "https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg",
-                "https://images.pexels.com/photos/20354072/pexels-photo-20354072.jpeg",
-                "https://images.pexels.com/photos/29775096/pexels-photo-29775096.jpeg"
+              final List<MediaEntity> images = [
+                MediaEntity(
+                  url:
+                      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+                  type: MediaType.video,
+                ),
+                // MediaEntity(
+                //   url:
+                //       "https://images.pexels.com/photos/12732558/pexels-photo-12732558.jpeg",
+                //   type: MediaType.image,
+                // )
+
+                // "https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg",
+                // "https://images.pexels.com/photos/20354072/pexels-photo-20354072.jpeg",
+                // "https://images.pexels.com/photos/29775096/pexels-photo-29775096.jpeg"
               ];
               const content =
                   "Tuyệt vời! Đây là câu hỏi rất hay về performance optimization cho feed có nhiều media (ảnh/video) giống Threads. Để tôi giải thích các kỹ thuật tối ưu";

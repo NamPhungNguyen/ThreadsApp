@@ -1,4 +1,5 @@
 import 'package:bus_booking/core/constants/app_colors.dart';
+import 'package:bus_booking/domain/entities/media/media_entity.dart';
 import 'package:bus_booking/presentation/widgets/action_button/action_button.dart';
 import 'package:bus_booking/presentation/widgets/thread_item/components/thread_avatar.dart';
 import 'package:bus_booking/presentation/widgets/thread_item/components/thread_media_content.dart';
@@ -22,7 +23,7 @@ class ThreadItem extends StatelessWidget {
   final String? avatarUrl;
   final bool isLinkTopic;
   final bool isVerified;
-  final List<String>? images;
+  final List<MediaEntity>? images;
   final String? content;
   final int likeCount;
   final int commentCount;
@@ -72,7 +73,7 @@ class ThreadItem extends StatelessWidget {
           // Media Content
           if (images != null && images!.isNotEmpty) ...[
             const SizedBox(height: 8),
-            ThreadMediaContent(images: images!),
+            ThreadMediaContent(mediaUrls: images!),
           ],
           // Action Buttons
           if ((content != null && content!.isNotEmpty) ||
