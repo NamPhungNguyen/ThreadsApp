@@ -41,37 +41,67 @@ class HomePage extends BaseBlocPage<HomeBloc> {
                   ],
                 },
                 // Post 2: Multiple images
-                // {
-                //   'content': 'Beautiful sunset photos from my trip 🌅',
-                //   'media': [
-                //     MediaEntity(
-                //       url:
-                //           "https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg",
-                //       type: MediaType.image,
-                //     ),
-                //     MediaEntity(
-                //       url:
-                //           "https://images.pexels.com/photos/20354072/pexels-photo-20354072.jpeg",
-                //       type: MediaType.image,
-                //     ),
-                //     MediaEntity(
-                //       url:
-                //           "https://images.pexels.com/photos/29775096/pexels-photo-29775096.jpeg",
-                //       type: MediaType.image,
-                //     ),
-                //   ],
-                // },
-                // // Post 3: Another video
-                // {
-                //   'content': 'Amazing performance! 🎬',
-                //   'media': [
-                //     MediaEntity(
-                //       url:
-                //           "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-                //       type: MediaType.video,
-                //     ),
-                //   ],
-                // },
+                {
+                  'content': 'Beautiful sunset photos from my trip 🌅',
+                  'media': [
+                    MediaEntity(
+                      url:
+                          "https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg",
+                      type: MediaType.image,
+                    ),
+                    MediaEntity(
+                      url:
+                          "https://images.pexels.com/photos/20354072/pexels-photo-20354072.jpeg",
+                      type: MediaType.image,
+                    ),
+                    MediaEntity(
+                      url:
+                          "https://images.pexels.com/photos/29775096/pexels-photo-29775096.jpeg",
+                      type: MediaType.image,
+                    ),
+                  ],
+                },
+                // Post 3: Another video
+                {
+                  'content': 'Amazing performance! 🎬',
+                  'media': [
+                    MediaEntity(
+                      url:
+                          "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+                      type: MediaType.video,
+                    ),
+                  ],
+                },
+                {
+                  'content': 'Amazing performance! 🎬',
+                  'media': [
+                    MediaEntity(
+                      url:
+                          "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+                      type: MediaType.video,
+                    ),
+                  ],
+                },
+                {
+                  'content': 'Amazing performance! 🎬',
+                  'media': [
+                    MediaEntity(
+                      url:
+                          "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+                      type: MediaType.video,
+                    ),
+                  ],
+                },
+                {
+                  'content': 'Amazing performance! 🎬',
+                  'media': [
+                    MediaEntity(
+                      url:
+                          "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+                      type: MediaType.video,
+                    ),
+                  ],
+                },
               ];
 
               return SliverList.builder(

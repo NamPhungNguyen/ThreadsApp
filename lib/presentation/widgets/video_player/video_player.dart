@@ -35,9 +35,8 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
           _controller.setVolume(0);
           _controller.setLooping(true);
           setState(() {});
-          // _controller.play();
+          // ✅ Video will auto-play via VisibilityDetector when >50% visible (center of screen)
         }
-        // });
       }).catchError((e) {
         debugPrint('❌ Video init error: $e');
       });
@@ -68,14 +67,14 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
         debugPrint(
             '📹 Video visibility: ${visiblePercentage.toStringAsFixed(1)}% | isPlaying: $_isPlaying');
 
-        if (visiblePercentage > 20 && !_isPlaying) {
-          // ✅ Giảm từ 60% → 20%
-          debugPrint('▶️ Starting video playback');
+        // ✅ Only play when video is >50% visible (center priority)
+        if (visiblePercentage > 30 && !_isPlaying) {
+          debugPrint('▶️ Starting video playback (center of screen)');
           _controller.play();
           setState(() {
             _isPlaying = true;
           });
-        } else if (visiblePercentage <= 20 && _isPlaying) {
+        } else if (visiblePercentage <= 30 && _isPlaying) {
           debugPrint('⏸️ Pausing video');
           _controller.pause();
           setState(() {
