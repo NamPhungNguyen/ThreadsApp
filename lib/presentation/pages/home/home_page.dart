@@ -26,30 +26,60 @@ class HomePage extends BaseBlocPage<HomeBloc> {
           ),
           BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
-              // todo: add api call
-              final List<MediaEntity> images = [
-                MediaEntity(
-                  url:
-                      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-                  type: MediaType.video,
-                ),
-                // MediaEntity(
-                //   url:
-                //       "https://images.pexels.com/photos/12732558/pexels-photo-12732558.jpeg",
-                //   type: MediaType.image,
-                // )
-
-                // "https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg",
-                // "https://images.pexels.com/photos/20354072/pexels-photo-20354072.jpeg",
-                // "https://images.pexels.com/photos/29775096/pexels-photo-29775096.jpeg"
+              // TODO: Replace with real API call
+              // Mock data: Mỗi post có media list riêng
+              final posts = [
+                // Post 1: Single video
+                {
+                  'content': 'Check out this amazing video! 🎥',
+                  'media': [
+                    MediaEntity(
+                      url:
+                          "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+                      type: MediaType.video,
+                    ),
+                  ],
+                },
+                // Post 2: Multiple images
+                // {
+                //   'content': 'Beautiful sunset photos from my trip 🌅',
+                //   'media': [
+                //     MediaEntity(
+                //       url:
+                //           "https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg",
+                //       type: MediaType.image,
+                //     ),
+                //     MediaEntity(
+                //       url:
+                //           "https://images.pexels.com/photos/20354072/pexels-photo-20354072.jpeg",
+                //       type: MediaType.image,
+                //     ),
+                //     MediaEntity(
+                //       url:
+                //           "https://images.pexels.com/photos/29775096/pexels-photo-29775096.jpeg",
+                //       type: MediaType.image,
+                //     ),
+                //   ],
+                // },
+                // // Post 3: Another video
+                // {
+                //   'content': 'Amazing performance! 🎬',
+                //   'media': [
+                //     MediaEntity(
+                //       url:
+                //           "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+                //       type: MediaType.video,
+                //     ),
+                //   ],
+                // },
               ];
-              const content =
-                  "Tuyệt vời! Đây là câu hỏi rất hay về performance optimization cho feed có nhiều media (ảnh/video) giống Threads. Để tôi giải thích các kỹ thuật tối ưu";
+
               return SliverList.builder(
                 itemBuilder: (context, index) {
+                  final post = posts[index];
                   return ThreadItem(
-                    content: content,
-                    images: images,
+                    content: post['content'] as String,
+                    images: post['media'] as List<MediaEntity>,
                     isLinkTopic: index % 2 == 0,
                     isVerified: index % 3 == 0,
                     likeCount: 7982000 + index * 100,
@@ -58,7 +88,7 @@ class HomePage extends BaseBlocPage<HomeBloc> {
                     shareCount: 11 + index * 2,
                   );
                 },
-                itemCount: 2,
+                itemCount: posts.length,
               );
             },
           ),
