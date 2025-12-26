@@ -1,6 +1,5 @@
 import 'package:bus_booking/core/constants/app_base_path.dart';
 import 'package:bus_booking/core/constants/app_colors.dart';
-import 'package:bus_booking/domain/entities/media/media_entity.dart';
 import 'package:bus_booking/foundation/architecture/base_bloc.dart';
 import 'package:bus_booking/presentation/pages/home/bloc/home_bloc.dart';
 import 'package:bus_booking/presentation/widgets/thread_item/thread_item.dart';
@@ -13,7 +12,9 @@ part 'components/app_bar_home.dart';
 part 'components/user_new_post_threads.dart';
 
 class HomePage extends BaseBlocPage<HomeBloc> {
-  HomePage({super.key});
+  HomePage({super.key}) {
+    blocPage.add(HomeInitialEvent());
+  }
 
   @override
   Widget buildPage(BuildContext context) {
@@ -26,100 +27,22 @@ class HomePage extends BaseBlocPage<HomeBloc> {
           ),
           BlocBuilder<HomeBloc, HomeState>(
             builder: (context, state) {
-              // TODO: Replace with real API call
-              // Mock data: Mỗi post có media list riêng
-              final posts = [
-                // Post 1: Single video
-                {
-                  'content': 'Check out this amazing video! 🎥',
-                  'media': [
-                    MediaEntity(
-                      url:
-                          "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-                      type: MediaType.video,
-                    ),
-                  ],
-                },
-                // Post 2: Multiple images
-                {
-                  'content': 'Beautiful sunset photos from my trip 🌅',
-                  'media': [
-                    MediaEntity(
-                      url:
-                          "https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg",
-                      type: MediaType.image,
-                    ),
-                    MediaEntity(
-                      url:
-                          "https://images.pexels.com/photos/20354072/pexels-photo-20354072.jpeg",
-                      type: MediaType.image,
-                    ),
-                    MediaEntity(
-                      url:
-                          "https://images.pexels.com/photos/29775096/pexels-photo-29775096.jpeg",
-                      type: MediaType.image,
-                    ),
-                  ],
-                },
-                // Post 3: Another video
-                {
-                  'content': 'Amazing performance! 🎬',
-                  'media': [
-                    MediaEntity(
-                      url:
-                          "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-                      type: MediaType.video,
-                    ),
-                  ],
-                },
-                {
-                  'content': 'Amazing performance! 🎬',
-                  'media': [
-                    MediaEntity(
-                      url:
-                          "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-                      type: MediaType.video,
-                    ),
-                  ],
-                },
-                {
-                  'content': 'Amazing performance! 🎬',
-                  'media': [
-                    MediaEntity(
-                      url:
-                          "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-                      type: MediaType.video,
-                    ),
-                  ],
-                },
-                {
-                  'content': 'Amazing performance! 🎬',
-                  'media': [
-                    MediaEntity(
-                      url:
-                          "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
-                      type: MediaType.video,
-                    ),
-                  ],
-                },
-              ];
+              if (state is HomeLoading) {
+                return const SliverFillRemaining(
+                  child: Center(child: CircularProgressIndicator()),
+                );
+              }
 
-              return SliverList.builder(
-                itemBuilder: (context, index) {
-                  final post = posts[index];
-                  return ThreadItem(
-                    content: post['content'] as String,
-                    images: post['media'] as List<MediaEntity>,
-                    isLinkTopic: index % 2 == 0,
-                    isVerified: index % 3 == 0,
-                    likeCount: 7982000 + index * 100,
-                    commentCount: 12223 + index * 10,
-                    repostCount: 44 + index,
-                    shareCount: 11 + index * 2,
-                  );
-                },
-                itemCount: posts.length,
-              );
+              if (state is HomeLoaded) {
+                return SliverList.builder(
+                  itemBuilder: (context, index) {
+                    return ThreadItem(thread: state.threads[index]);
+                  },
+                  itemCount: state.threads.length,
+                );
+              }
+
+              return const SliverToBoxAdapter(child: SizedBox.shrink());
             },
           ),
         ],
