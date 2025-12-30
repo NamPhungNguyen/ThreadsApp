@@ -30,6 +30,8 @@ class _ImageMediaState extends State<ImageMedia>
     super.build(context);
     final pixelRatio = MediaQuery.of(context).devicePixelRatio;
     final cacheWidth = (pixelRatio * widget.width).toInt();
+    print("pixelRatio: $pixelRatio");
+    print("cacheWidth: $cacheWidth");
 
     return GestureDetector(
       onTap: widget.onTap,
@@ -38,13 +40,12 @@ class _ImageMediaState extends State<ImageMedia>
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
           child: CachedNetworkImage(
+            imageUrl: widget.imageUrl,
             memCacheWidth: cacheWidth,
             maxWidthDiskCache: cacheWidth,
             fadeInDuration: const Duration(milliseconds: 200),
             fadeOutDuration: const Duration(milliseconds: 200),
-            imageUrl: widget.imageUrl,
             fit: BoxFit.cover,
-            filterQuality: FilterQuality.medium,
             placeholder: (context, url) => Container(
               height: widget.height,
               color: AppColors.borderDark,

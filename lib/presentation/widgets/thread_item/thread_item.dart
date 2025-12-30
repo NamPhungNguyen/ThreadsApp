@@ -57,7 +57,7 @@ class ThreadItem extends StatelessWidget {
           ),
           if (hasMedia) ...[
             const SizedBox(height: 8),
-            ThreadMediaContent(mediaUrls: thread.media),
+            ThreadMediaContent(media: thread.media),
           ],
           if (hasContent || hasMedia) ...[
             Padding(

@@ -30,7 +30,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         content: 'Check out this amazing photo!',
         media: [
           MediaEntity(
-            url: 'https://images.pexels.com/photos/20354072/pexels-photo-20354072.jpeg',
+            url:
+                'https://images.pexels.com/photos/20354072/pexels-photo-20354072.jpeg',
             type: MediaType.image,
           ),
         ],
@@ -46,15 +47,18 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         content: 'Beautiful sunset photos from my trip',
         media: [
           MediaEntity(
-            url: 'https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg',
+            url:
+                'https://images.pexels.com/photos/842711/pexels-photo-842711.jpeg',
             type: MediaType.image,
           ),
           MediaEntity(
-            url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+            url:
+                'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
             type: MediaType.video,
           ),
           MediaEntity(
-            url: 'https://images.pexels.com/photos/29775096/pexels-photo-29775096.jpeg',
+            url:
+                'https://images.pexels.com/photos/29775096/pexels-photo-29775096.jpeg',
             type: MediaType.image,
           ),
         ],
@@ -69,7 +73,56 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         content: 'Amazing performance!',
         media: [
           MediaEntity(
-            url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+            url:
+                'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+            type: MediaType.video,
+          ),
+        ],
+        isLinkTopic: true,
+        likeCount: 1892,
+        commentCount: 156,
+        repostCount: 34,
+        shareCount: 8,
+      ),
+      ThreadEntity(
+        id: '4',
+        content: 'Amazing performance!',
+        media: [
+          MediaEntity(
+            url:
+                'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+            type: MediaType.video,
+          ),
+        ],
+        isLinkTopic: true,
+        likeCount: 1892,
+        commentCount: 156,
+        repostCount: 34,
+        shareCount: 8,
+      ),
+      ThreadEntity(
+        id: '5',
+        content: 'Amazing performance!',
+        media: [
+          MediaEntity(
+            url:
+                'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+            type: MediaType.video,
+          ),
+        ],
+        isLinkTopic: true,
+        likeCount: 1892,
+        commentCount: 156,
+        repostCount: 34,
+        shareCount: 8,
+      ),
+      ThreadEntity(
+        id: '6',
+        content: 'Amazing performance!',
+        media: [
+          MediaEntity(
+            url:
+                'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
             type: MediaType.video,
           ),
         ],

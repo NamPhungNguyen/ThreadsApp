@@ -6,19 +6,22 @@ import 'package:flutter/material.dart';
 class ThreadMediaContent extends StatelessWidget {
   const ThreadMediaContent({
     super.key,
-    required this.mediaUrls,
+    required this.media,
   });
 
-  final List<MediaEntity> mediaUrls;
+  final List<MediaEntity> media;
 
   @override
   Widget build(BuildContext context) {
-    if (mediaUrls.isEmpty) return const SizedBox.shrink();
+    if (media.isEmpty) return const SizedBox.shrink();
 
-    if (mediaUrls.length == 1) {
-      return SingleMedia(mediaUrl: mediaUrls.first);
+    if (media.length == 1) {
+      return SizedBox(
+        height: 200,
+        child: SingleMedia(media: media.first),
+      );
     }
 
-    return MultipleMedia(mediaUrls: mediaUrls);
+    return MultipleMedia(media: media);
   }
 }

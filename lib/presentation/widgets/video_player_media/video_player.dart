@@ -12,11 +12,13 @@ class VideoPlayerWidget extends StatefulWidget {
     required this.videoUrl,
     this.onTap,
     this.height = 200,
+    this.onControllerReady,
   });
 
   final String videoUrl;
   final double height;
   final VoidCallback? onTap;
+  final void Function(VideoPlayerController)? onControllerReady;
 
   @override
   State<VideoPlayerWidget> createState() => _VideoPlayerWidgetState();
@@ -24,7 +26,7 @@ class VideoPlayerWidget extends StatefulWidget {
 
 class _VideoPlayerWidgetState extends State<VideoPlayerWidget>
     with SingleTickerProviderStateMixin {
-  late VideoPlayerController _controller;
+  VideoPlayerController? _controller;
   final Key _uniqueKey = UniqueKey();
   bool _isMuted = true;
   bool _isRegistered = false;
@@ -32,39 +34,53 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget>
   bool _isUserPaused = false; // Track if user manually paused
   Timer? _hideControlsTimer;
   bool _isInitialized = false;
+  bool _isInitializing = false; // Prevent multiple init calls
+
+  // Threshold to start initializing video (lazy loading)
+  static const double _initThreshold = 0.2;
 
   VideoPlaybackManager get _manager => VideoPlaybackManager.instance;
 
   @override
   void initState() {
     super.initState();
-    _initData();
+    // Don't init video here - wait for visibility (lazy loading)
   }
 
-  void _initData() {
+  void _initVideoIfNeeded() {
+    // Only init when visible enough and not already initializing
+    if (_isInitializing || _isInitialized || _controller != null) return;
+    if (_lastVisibleFraction < _initThreshold) return;
+
+    _isInitializing = true;
     _controller = VideoPlayerController.networkUrl(
       Uri.parse(widget.videoUrl),
     )..initialize().then((_) {
         if (mounted) {
-          _controller.setVolume(0);
-          _controller.setLooping(true);
+          _controller?.setVolume(0);
+          _controller?.setLooping(true);
           _isInitialized = true;
+          _isInitializing = false;
           setState(() {});
 
-          // Only register if we already have visibility data
-          // Otherwise wait for VisibilityDetector callback
-          if (_lastVisibleFraction >= 0) {
-            _registerWithManager();
+          // Notify parent that controller is ready
+          if (_controller != null) {
+            widget.onControllerReady?.call(_controller!);
           }
+
+          // Register with manager now that we're initialized
+          _registerWithManager();
         }
       }).catchError((e) {
+        _isInitializing = false;
         debugPrint('❌ Video init error: $e');
       });
   }
 
   void _registerWithManager() {
-    if (_isRegistered || !_isInitialized) return;
-    _manager.registerVideo(_uniqueKey, _controller,
+    final controller = _controller;
+    if (_isRegistered || !_isInitialized || controller == null) return;
+    _manager.registerVideo(_uniqueKey, controller,
         initialVisibility: _lastVisibleFraction > 0 ? _lastVisibleFraction : 0);
     _isRegistered = true;
   }
@@ -75,14 +91,16 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget>
     if (_isRegistered) {
       _manager.unregisterVideo(_uniqueKey);
     }
-    _controller.dispose();
+    _controller?.dispose();
     super.dispose();
   }
 
   void _toggleMute() {
+    final controller = _controller;
+    if (controller == null) return;
     setState(() {
       _isMuted = !_isMuted;
-      _controller.setVolume(_isMuted ? 0 : 1);
+      controller.setVolume(_isMuted ? 0 : 1);
     });
   }
 
@@ -92,18 +110,28 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget>
 
   @override
   Widget build(BuildContext context) {
+    final controller = _controller;
+    final isReady = controller != null && controller.value.isInitialized;
+
     return VisibilityDetector(
       key: _uniqueKey,
       onVisibilityChanged: (VisibilityInfo info) {
         final newVisibility = info.visibleFraction;
         _lastVisibleFraction = newVisibility;
 
+        // Lazy init: start loading when becoming visible
+        _initVideoIfNeeded();
+
         // If initialized but not registered yet, register now with real visibility
         if (_isInitialized && !_isRegistered) {
           _registerWithManager();
         }
 
-        if (!_controller.value.isInitialized || !_isRegistered) return;
+        if (controller == null ||
+            !controller.value.isInitialized ||
+            !_isRegistered) {
+          return;
+        }
 
         // Reset user pause state when scrolled out of view (< 50%)
         // So when user scrolls back, video can auto-play again
@@ -116,23 +144,22 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget>
         if (!(_isUserPaused && newVisibility > 0.5)) {
           _manager.updateVisibility(_uniqueKey, newVisibility);
         }
-        // No need to call setState here - _onVideoUpdate listener handles UI updates
       },
       child: SizedBox(
         height: widget.height,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
           child: GestureDetector(
-            onTap: _controller.value.isInitialized ? _onTapVideo : null,
+            onTap: isReady ? _onTapVideo : null,
             child: Stack(
               alignment: Alignment.center,
               children: [
                 // Video Player
-                if (_controller.value.isInitialized)
+                if (isReady)
                   SizedBox.expand(
                     child: AspectRatio(
-                      aspectRatio: _controller.value.aspectRatio,
-                      child: VideoPlayer(_controller),
+                      aspectRatio: controller.value.aspectRatio,
+                      child: VideoPlayer(controller),
                     ),
                   )
                 else
@@ -147,7 +174,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget>
                   ),
 
                 // Mute button (Threads style - bottom right)
-                if (_controller.value.isInitialized)
+                if (isReady)
                   Positioned(
                     right: 12,
                     bottom: 12,

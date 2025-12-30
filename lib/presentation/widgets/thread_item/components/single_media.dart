@@ -3,45 +3,71 @@ import 'package:bus_booking/presentation/widgets/full_screen_media/full_screen_m
 import 'package:bus_booking/presentation/widgets/image_media/image_media.dart';
 import 'package:bus_booking/presentation/widgets/video_player_media/video_player.dart';
 import 'package:flutter/material.dart';
+import 'package:video_player/video_player.dart';
 
-class SingleMedia extends StatelessWidget {
-  const SingleMedia({super.key, required this.mediaUrl});
+class SingleMedia extends StatefulWidget {
+  const SingleMedia({super.key, required this.media});
 
-  final MediaEntity mediaUrl;
+  final MediaEntity media;
+
+  @override
+  State<SingleMedia> createState() => _SingleMediaState();
+}
+
+class _SingleMediaState extends State<SingleMedia> {
+  VideoPlayerController? _videoController;
 
   @override
   Widget build(BuildContext context) {
+    final imageWidth = MediaQuery.of(context).size.width;
+    print("Single Media: $imageWidth");
     return Padding(
       padding: const EdgeInsets.only(left: 50, right: 12),
-      child: mediaUrl.type == MediaType.image
-          ? _buildMediaImage(context, mediaUrl)
-          : _buildMediaVideo(context, mediaUrl),
+      child: widget.media.type == MediaType.image
+          ? _buildMediaImage(context, widget.media, imageWidth)
+          : _buildMediaVideo(context, widget.media),
     );
   }
 
-  Widget _buildMediaImage(BuildContext context, MediaEntity media) {
-    final imageWidth = MediaQuery.of(context).size.width;
+  Widget _buildMediaImage(
+    BuildContext context,
+    MediaEntity media,
+    double width,
+  ) {
     return ImageMedia(
       imageUrl: media.url,
-      width: imageWidth,
-      onTap: () => _openFullScreen(context, 0),
+      width: width,
+      onTap: () => _openFullScreen(context, media, 0),
     );
   }
 
-  Widget _buildMediaVideo(BuildContext context, MediaEntity mediaUrl) {
+  Widget _buildMediaVideo(BuildContext context, MediaEntity media) {
     return VideoPlayerWidget(
-      videoUrl: mediaUrl.url,
-      onTap: () => _openFullScreen(context, 0),
+      videoUrl: media.url,
+      onTap: () => _openFullScreen(context, media, 0),
+      onControllerReady: (controller) {
+        _videoController = controller;
+      },
     );
   }
 
-  void _openFullScreen(BuildContext context, int index) {
+  void _openFullScreen(BuildContext context, MediaEntity media, int index) {
     Navigator.push(
       context,
-      MaterialPageRoute(
-        builder: (_) => FullScreenMedia(
-          mediaUrls: [mediaUrl],
+      PageRouteBuilder(
+        opaque: false,
+        barrierColor: Colors.transparent,
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            FullScreenMedia(
+          media: [media],
           initialIndex: index,
+          existingVideoControllers:
+              _videoController != null ? {0: _videoController!} : null,
+        ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            FadeTransition(
+          opacity: animation,
+          child: child,
         ),
       ),
     );
